@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nephased"                     
-version = "0.0.3"                     
+version = "0.0.31"                     
 description = "A BERT-based text sentiment classification pipeline for Nepali"  
 readme = "README.md"                  
 license = { text = "MIT" }      
@@ -26,7 +26,7 @@ dependencies = [
   "nepali-stemmer>=0.0.2",
   "nltk>=3.9.1",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 
 # URLs for your package/project
 [project.urls]
