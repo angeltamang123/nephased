@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nephased"                     
-version = "0.0.2"                     
+version = "0.0.3"                     
 description = "A BERT-based text sentiment classification pipeline for Nepali"  
 readme = "README.md"                  
 license = { text = "MIT" }      

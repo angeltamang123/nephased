@@ -11,8 +11,10 @@ for detecting Nepali text sentiment
 From TestPyPI:
 
 ```bash
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple nephased
+pip install nephased
 ```
+
+Or you can use the Nephased(finetune of distilbert-base-nepali) from [huggingface](https://huggingface.co/Vyke2000/Nephased)
 
 ## Usage
 
@@ -53,5 +55,14 @@ Nephased can distinguish between 4 categories:
 
 The guidelines for segragating such sentiments are on [NepsaGuidelines](https://github.com/oya163/nepali-sentiment-analysis/blob/master/guidelines/NepsaGuidelines_2020.pdf)
 
-> [!NepSa]
-> Nephased is trained on [NepSa](https://github.com/oya163/nepali-sentiment-analysis/blob/master/data/nepcls/csv/ss_ac_at_txt_unbal.csv) dataset
+> [!NOTE]
+> Nephased is trained on [NepSa](https://github.com/oya163/nepali-sentiment-analysis/blob/master/data/nepcls/csv/ss_ac_at_txt_unbal.csv) dataset \
+> By default Nephased preprocesses the input:
+>
+> - stemming using [nepali-stemmer](https://github.com/oya163/nepali-stemmer)
+> - lowering case, punctuation and stopwords removal \
+>   you can choose to not preprocess text when initializing Nephased
+>
+> ```python
+> clf = nephased(preprocess_text = False)
+> ```

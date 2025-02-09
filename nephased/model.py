@@ -6,10 +6,11 @@ import nltk
 from nltk.corpus import stopwords
 
 class NepaliSentimentClassifier:
-    def __init__(self, model_name="Vyke2000/BERT_Classifier_DE"):
+    def __init__(self, model_name="Vyke2000/Nephased", preprocess_text= True):
         # Determine device
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        
+        self.preprocess_text = preprocess_text
+
         # Load tokenizer and model
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -31,7 +32,7 @@ class NepaliSentimentClassifier:
             nltk.download('stopwords')
             self.nepali_stopwords = stopwords.words('nepali')
 
-    def preprocess_text(self, text):
+    def _preprocess_text(self, text):
         """Apply stemming, lowercasing, punctuation removal, and stopword removal."""
         text = self.stemmer.stem(text)  # Apply stemming
         text = text.lower()  # Convert to lowercase
@@ -51,13 +52,17 @@ class NepaliSentimentClassifier:
         """
         if isinstance(data, str):
             # Single text
-            data = self.preprocess_text(data)
+            if self.preprocess_text: 
+                data = self._preprocess_text(data)
+                
             result = self.clf(data)[0]  # returns list of length 1
             return self.label_map[int(result["label"].split("_")[1])]
 
         elif isinstance(data, list):
             # input is list 
-            data = [self.preprocess_text(x) for x in data]
+            if self.preprocess_text: 
+                data = [self._preprocess_text(x) for x in data]
+
             results = self.clf(data, batch_size=16)
             results = [self.label_map[int(result["label"].split("_")[1])] for result in results] 
             return results
