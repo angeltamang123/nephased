@@ -6,16 +6,38 @@ import nltk
 from nltk.corpus import stopwords
 
 class NepaliSentimentClassifier:
-    def __init__(self, model_name="Vyke2000/Nephased", preprocess_text= True):
+    def __init__(self, model_name="Vyke2000/Nephased", preprocess_text= True, quantization_technique="optimum", load_in=4):
         # Determine device
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.preprocess_text = preprocess_text
 
-        # Load tokenizer and model
+        # Load tokenizer and model with or witho
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        self.clf = pipeline("text-classification", model=self.model, tokenizer=self.tokenizer, device=self.device)
 
+        if quantization_technique == "optimum":
+            # .from_pretrained automatically uses optimum based on device
+            # for 
+            # quantization .i.e. if a supported CPU is the device then optimum is used
+            # else, if device is GPU then the model is loaded with full precision
+            self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+            self.clf = pipeline("text-classification", model=self.model, tokenizer=self.tokenizer, device=self.device)
+        
+        # Code below is an example skeleton for bitsandbytes quantization
+        # We'll wait for multi-platform version of bitsandbytes which is still in experiment
+        # once there's a stable release we could use code below to quantize for CPU device
+        # elif quantization_technique == "bitsandbytes":
+        #     if load_in == 4:
+        #         self.model = AutoModelForSequenceClassification.from_pretrained(model_name, load_in_4bit=True)
+        #         self.clf = pipeline("text-classification", model=self.model, tokenizer=self.tokenizer, device=self.device)
+        #     elif load_in == 8:
+        #         self.model = AutoModelForSequenceClassification.from_pretrained(model_name, load_in_8bit=True)
+        #         self.clf = pipeline("text-classification", model=self.model, tokenizer=self.tokenizer, device=self.device)
+        #     else:
+        #         raise ValueError("Please provide proper quantization option to load the model using bitsandbytes: 4 or 8")
+        
+        else:
+            raise ValueError("Please provide proper quantization technique to load the model. \nSupported quantization library: 'optimum'.")
+            
         self.label_map = {0: "GENERAL", 1: "PROFANITY_0", 2: "PROFANITY_1", 3: "VIOLENCE"}
 
         # Nepali Stemmer

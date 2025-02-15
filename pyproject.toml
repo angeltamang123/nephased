@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nephased"                     
-version = "0.0.31"                     
-description = "A BERT-based text sentiment classification pipeline for Nepali"  
+version = "0.0.32"                     
+description = "A BERT-based text sentiment classification pipeline for Nepali Language"  
 readme = "README.md"                  
 license = { text = "MIT" }      
 authors = [      
@@ -14,7 +14,7 @@ authors = [
   { name = "Gaurav Maharjan", email = "gauravmaharjan1@gmail.com"},
   { name = "Anil Bhatta", email = "bhattaanil1234@gmail.com"}
 ]
-keywords = ["nlp", "transformers", "bert", "nepali"]
+keywords = ["nlp", "transformers", "bert", "nepali", "nephased", "sentiment"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
@@ -25,6 +25,8 @@ dependencies = [
   "transformers>=4.0.0",
   "nepali-stemmer>=0.0.2",
   "nltk>=3.9.1",
+  "optimum>=1.24.0",
+  "importlib_resources>=6.5.2"
 ]
 requires-python = ">=3.10"
 
