@@ -1,5 +1,7 @@
 # nephased
 
+[[Live Demo]](https://demo-for-nephased.vercel.app/) | [[Prototyping]](https://github.com/angeltamang123/Nepali-Hate-Sentiment-Detection)
+
 > [!Warning]
 > This section contains vulgar words
 
@@ -11,7 +13,7 @@ for detecting Nepali text sentiment
 From TestPyPI:
 
 ```bash
-pip install nephased
+pip install nephased[ml]
 ```
 
 Or you can use the Nephased(finetune of distilbert-base-nepali) from [huggingface](https://huggingface.co/Vyke2000/Nephased)
